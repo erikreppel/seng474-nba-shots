@@ -21,10 +21,10 @@ def rescale(feature_vector):
     max_value = max(feature_vector)
     min_value = min(feature_vector)
     denominator = max_value - min_value
-    return map(lambda x: (x - min_value) / denominator, feature_vector)
+    return map(lambda x: float(x - min_value) / denominator, feature_vector)
 
 
-def rescale_features(features, df)
+def rescale_features(features, df):
     '''
     Params:
         features: a the list of feature names
