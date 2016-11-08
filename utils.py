@@ -24,13 +24,15 @@ def rescale(feature_vector):
     return map(lambda x: float(x - min_value) / denominator, feature_vector)
 
 
-def rescale_features(features, df):
+def rescale_features(features, df, non_scaled=[]):
     '''
     Params:
         features: a the list of feature names
         df: dataframe that contains the features
+        non_scaled: (default=[]) features to not scale
     return: a dataframe with the features rescaled
     '''
     for feature in features:
-        df[feature] = rescale(df[feature])
+        if feature not in non_scaled:
+            df[feature] = rescale(df[feature])
     return df
