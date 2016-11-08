@@ -1,3 +1,4 @@
+from sklearn.model_selection import cross_val_score
 # A library on small functions to help us out
 # Normalization functions
 
@@ -36,3 +37,22 @@ def rescale_features(features, df, non_scaled=[]):
         if feature not in non_scaled:
             df[feature] = rescale(df[feature])
     return df
+
+
+def get_cross_validated_score(X, y, clf, n_permutations=5):
+    '''
+    Wraps sklearn cross_val_score by properly reshaping the matrix and computing average.
+    Params:
+        X - matrix of feature values (df[features])
+        y - vector of target values (df[target])
+        clf - the classifier to test against
+        n_permutations - number of splits to run
+    Return:
+        mean - the mean score for the classifier
+        std - the standard deviation of the dataset
+    '''
+    y = y.as_matrix()
+    y = y.reshape(y.shape[0],)
+    scores = cross_val_score(clf, X, y, cv=n_permutations)
+    return scores.mean(), scores.std()
+
