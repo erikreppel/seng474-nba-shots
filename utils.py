@@ -56,3 +56,20 @@ def get_cross_validated_score(X, y, clf, n_permutations=5):
     scores = cross_val_score(clf, X, y, cv=n_permutations)
     return scores.mean(), scores.std()
 
+
+
+def make_advanced_data(shots_data, players_data, features):
+    '''
+    Grabs the features of interest from the player data
+    '''
+    advanced_data = {f: [] for f in features}
+    for index, shot in shots_data.iterrows():
+        pid = shot['player_id']
+        player = players_data[players_data['PLAYER_ID'] == pid]
+        for feature in features:
+            print player[feature]
+            advanced_data[feature].append(player[feature].values[0])
+    for key, val in advanced_data.items():
+        shots_data[key] = val
+    return shots_data
+
